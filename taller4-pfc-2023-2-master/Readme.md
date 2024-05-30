@@ -1,3 +1,7 @@
-# Repositorio base
-
-Este repositorio tiene las configuraciones y librerías necesarias para trabajar concurrencia
+# Taller 4 Reconocimiento de patrones
+```
+## Participantes
+- Juan Eduardo Calderon Jaramillo - 202259671
+- Santiago Anibal Carrillo Torres -202259465
+- Edwar Yamir Forero Blanco - 202259664
+```
