@@ -33,6 +33,9 @@ class Newton {
     case Div(e1, e2) => Div(Resta(Prod(derivar(e1, a), e2), Prod(e1, derivar(e2, a))), Prod(e2, e2))
     case Expo(e1, Numero(n)) => Prod(Numero(n), Prod(Expo(e1, Numero(n - 1)), derivar(e1, a)))
     case Logaritmo(e1) => Div(derivar(e1, a), e1)
+    case Expo(e1, e2) => Prod(Expo(e1, Resta(e2, Numero(1))), Suma(Prod(derivar(e1, a), e2), Prod(e1, Prod(derivar(e2, a), Logaritmo(e1)))))
+
+
   }
 
   def evaluar(f: Expr, a: Atomo, v: Double): Double = f match {
@@ -57,14 +60,13 @@ class Newton {
         case (_, Numero(0)) => le1
         case _ => Suma(le1, le2)
       }
-    case Resta(Numero(0), e) => limpiar(e)
     case Resta(e, Numero(0)) => limpiar(e)
-    case Resta(e1, e2) => Resta(limpiar(e1), limpiar(e2))
+    case Resta(Numero(0), e) => Resta(Numero(0), limpiar(e))
     case Resta(e1, e2) =>
       val le1 = limpiar(e1)
       val le2 = limpiar(e2)
       (le1, le2) match {
-        case (Numero(0), _) => le2
+        case (Numero(0), _) => Resta(Numero(0), le2)
         case (_, Numero(0)) => le1
         case _ => Resta(le1, le2)
       }
@@ -76,32 +78,33 @@ class Newton {
       val le1 = limpiar(e1)
       val le2 = limpiar(e2)
       (le1, le2) match {
-        case (Numero(0), _) => le2
-        case (_, Numero(0)) => le1
+        case (Numero(0), _) => Numero(0)
+        case (_, Numero(0)) => Numero(0)
+        case (Numero(1), _) => le2
+        case (_, Numero(1)) => le1
         case _ => Prod(le1, le2)
       }
     case Div(e, Numero(1)) => limpiar(e)
     case Div(Numero(0), _) => Numero(0)
     case Div(_, Numero(0)) => throw new IllegalArgumentException("Division by zero")
-    case Div(e1, e2) => Div(limpiar(e1), limpiar(e2))
     case Div(e1, e2) =>
       val le1 = limpiar(e1)
       val le2 = limpiar(e2)
       (le1, le2) match {
-        case (Numero(0), _) => le2
-        case (_, Numero(0)) => le1
+        case (Numero(0), _) => Numero(0)
+        case (_, Numero(1)) => le1
         case _ => Div(le1, le2)
       }
+    case Expo(e1, Numero(0)) => Numero(1)
+    case Expo(e1, Numero(1)) => limpiar(e1)
+    case Expo(Numero(0), _) => Numero(0)
+    case Expo(Numero(1), _) => Numero(1)
     case Expo(e1, e2) =>
       val le1 = limpiar(e1)
       val le2 = limpiar(e2)
-      (le1, le2) match {
-        case (Numero(0), _) => le2
-        case (_, Numero(0)) => le1
-        case _ => Expo(le1, le2)
-      }
+      Expo(le1, le2)
     case Logaritmo(e1) => Logaritmo(limpiar(e1))
-    case e=>e
+    case e => e
   }
 
   def raizNewton(f: Expr, a: Atomo, x0: Double, ba: (Expr, Atomo, Double) => Boolean): Double = {
@@ -120,40 +123,42 @@ class Newton {
   def buenaAprox(f: Expr, a: Atomo, d: Double): Boolean = {
     math.abs(evaluar(f, a, d)) < 0.001
   }
-
-
 }
 
 object Newton {
   def main(args: Array[String]): Unit = {
-    val expr1 = Suma(Atomo('x'), Numero(2))
-    val expr2 = Prod(Atomo('x'), Atomo('x'))
-    val expr3 = Suma(expr1, Expo(expr2, Numero(5)))
-    val expr4 = Logaritmo(Atomo('x'))
-    val expr5 = Prod(Div(expr1, expr2), Resta(expr3, expr4))
-    val expr6 = Expo(Atomo('x'), Numero(3))
-
-    val n = new Newton
-    //print(n.mostrar(n.derivar(Suma(Atomo ('k') , Prod (Numero ( 3.0 ) , Atomo ('x') ) ) , Atomo ('x'))))
-    //print(n.mostrar(n.derivar(expr6, Atomo('x'))))
-
-    // ejemplo funcion evaluar
-    //println(n.evaluar( Logaritmo ( expr1 ) ,Atomo ('x' ) , 5.0 ))
-    println(n.limpiar(n.derivar(Suma (Atomo ('k') , Prod(Numero ( 3.0 ) , Atomo ('x'))),Atomo('x'))))
-    println(n.mostrar(n.limpiar(n.derivar(Suma(Atomo ('n'),Prod(Numero(3.0),Atomo('x'))),Atomo('x')))))
-    println(n.mostrar(Expo(Logaritmo(Atomo('x')), Numero(2))))
-
-//    val e1= Resta ( Prod (Atomo ('x') ,Atomo ('x') ) , Numero ( 2.0 ) )
-//    val e2= Resta(Prod(Atomo('x') ,Atomo ('x') ) , Numero ( 4.0 ) )
-//    val e3 = Suma(Resta(Prod(Atomo('x') ,Atomo ('x') ) , Numero (4.0)),Prod(Numero (3.0) ,Atomo ('x')))
-//    println(n.raizNewton(e1,Atomo('x'),2.0,n.buenaAprox))
-//    println(n.raizNewton(e2,Atomo('x'),2.0,n.buenaAprox))
-//    println(n.raizNewton(e3,Atomo('x'),2.0,n.buenaAprox))
-    println(n.mostrar(Suma(Atomo('x') , Numero(2))))
-    println(n.evaluar(Suma(Prod(Numero(2), Atomo('x')), Expo(Numero(3), Numero(2))), Atomo('x'), 4))
-
+    val n = new Newton()
+    val expr1 = Suma(
+      Prod(
+        Resta(
+          Expo(
+            Suma(
+              Logaritmo(
+                Atomo('x')
+              ),
+              Atomo('x')
+            ),
+            Numero(2)
+          ),
+          Div(
+            Atomo('x'),
+            Numero(3)
+          )
+        ),
+        Atomo('x')
+      ),
+      Div(
+        Logaritmo(
+          Expo(
+            Atomo('x'),
+            Atomo('x')
+          )
+        ),
+        Atomo('x')
+      )
+    )
+    println(n.buenaAprox(expr1, Atomo('x'), 1.5))
   }
-
-
 }
+
 

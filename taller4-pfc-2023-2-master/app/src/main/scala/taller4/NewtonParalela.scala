@@ -1,38 +1,48 @@
 package taller4
 
+import common._
+import scala.concurrent._
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
 class NewtonParalela {
 
-  import scala.concurrent._
-  import scala.concurrent.ExecutionContext.Implicits.global
-  import scala.concurrent.duration._
+  def mostrarPar(prof:Int)(maxProf:Int)(e: Expr): String = {
+    if (prof >= maxProf){
+      val a = new Newton
+      a.mostrar(e)
+    }else{
+      e match {
+        case Numero(d) => d.toString
+        case Atomo(x) => x.toString
+        case Suma(e1, e2) =>
+          val (s1, s2) = parallel(mostrarPar(prof+1)(maxProf)(e1), mostrarPar(prof+1)(maxProf)(e2))
+          s"($s1 + $s2)"
 
-  def evaluarPar(f: Expr, a: Atomo, v: Double): Future[Double] = f match {
-    case Numero(d) => Future.successful(d)
-    case Atomo(x) => Future.successful(if (x == a.x) v else throw new IllegalArgumentException(s"Unknown variable $x"))
-    case Suma(e1, e2) => for {
-      v1 <- evaluarPar(e1, a, v)
-      v2 <- evaluarPar(e2, a, v)
-    } yield v1 + v2
-    case Prod(e1, e2) => for {
-      v1 <- evaluarPar(e1, a, v)
-      v2 <- evaluarPar(e2, a, v)
-    } yield v1 * v2
-    case Resta(e1, e2) => for {
-      v1 <- evaluarPar(e1, a, v)
-      v2 <- evaluarPar(e2, a, v)
-    } yield v1 - v2
-    case Div(e1, e2) => for {
-      v1 <- evaluarPar(e1, a, v)
-      v2 <- evaluarPar(e2, a, v)
-    } yield v1 / v2
-    case Expo(e1, e2) => for {
-      v1 <- evaluarPar(e1, a, v)
-      v2 <- evaluarPar(e2, a, v)
-    } yield math.pow(v1, v2)
-    case Logaritmo(e1) => for {
-      v1 <- evaluarPar(e1, a, v)
-    } yield math.log(v1)
+        case Prod(e1, e2) =>
+          val (p1, p2) = parallel(mostrarPar(prof+1)(maxProf)(e1), mostrarPar(prof+1)(maxProf)(e2))
+          s"($p1 * $p2)"
+
+        case Resta(e1, e2) =>
+          val (r1, r2) = parallel(mostrarPar(prof+1)(maxProf)(e1), mostrarPar(prof+1)(maxProf)(e2))
+          s"($r1 - $r2)"
+
+        case Div(e1, e2) =>
+          val (d1, d2) = parallel(mostrarPar(prof+1)(maxProf)(e1), mostrarPar(prof+1)(maxProf)(e2))
+          s"($d1 / $d2)"
+
+        case Expo(e1, e2) =>
+          val (ex1, ex2) = parallel(mostrarPar(prof+1)(maxProf)(e1), mostrarPar(prof+1)(maxProf)(e2))
+          s"($ex1 ^ $ex2)"
+
+        case Logaritmo(e1) =>
+          val l1 = mostrarPar(prof+1)(maxProf)(e1)
+          s"(lg($l1))"
+      }
+
+    }
   }
 
-
 }
+
+//para imprimir
+

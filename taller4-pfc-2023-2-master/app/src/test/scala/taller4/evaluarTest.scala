@@ -8,24 +8,144 @@ import org.scalatestplus.junit.JUnitRunner
 class evaluarTest extends AnyFunSuiteLike {
   val n = new Newton()
   test("testEvaluar 1") {
-    val expr = Expo(Logaritmo(Numero(10)), Numero(2))
-    assert(n.evaluar(expr, Atomo('x'), 0) == math.pow(math.log(10), 2))
+    val expr1 = Suma(
+      Prod(
+        Suma(Atomo('x'), Numero(1)),
+        Div(
+          Resta(Expo(Atomo('x'), Numero(2)), Numero(4)),
+          Numero(2)
+        )
+      ),
+      Div(Numero(5), Suma(Atomo('x'), Numero(2)))
+    )
+    val resultado = n.evaluar(expr1, Atomo('x'), 2.0)
+    assert(resultado == 1.25)
   }
+
   test("testEvaluar 2") {
-    val expr = Div(Suma(Numero(10), Atomo('x')), Numero(5))
-    assert(n.evaluar(expr, Atomo('x'), 5) == 3)
+    val expr = Resta(
+      Div(
+        Prod(
+          Suma(
+            Expo(
+              Atomo('x'),
+              Numero(2)
+            ),
+            Numero(2)
+          ),
+          Resta(
+            Logaritmo(
+              Atomo('x')
+            ),
+            Numero(3)
+          )
+        ),
+        Atomo('x')
+      ),
+      Logaritmo(
+        Div(
+          Expo(
+            Atomo('x'),
+            Numero(2)
+          ),
+          Numero(2)
+        )
+      )
+    )
+    val resultado = n.evaluar(expr, Atomo('x'), 2.0)
+    assert(resultado == -7.613705638880109)
   }
+
   test("testEvaluar 3") {
-    val expr = Prod(Atomo('x'), Suma(Numero(5), Atomo('x')))
-    assert(n.evaluar(expr, Atomo('x'), 3) == 24)
+    val expr = Suma(
+      Prod(
+        Resta(
+          Expo(
+            Suma(
+              Logaritmo(
+                Atomo('x')
+              ),
+              Numero(2)
+            ),
+            Numero(2)
+          ),
+          Div(
+            Atomo('x'),
+            Numero(3)
+          )
+        ),
+        Atomo('x')
+      ),
+      Div(
+        Logaritmo(
+          Expo(
+            Atomo('x'),
+            Numero(2)
+          )
+        ),
+        Numero(2)
+      )
+    )
+    val resultado = n.evaluar(expr, Atomo('x'), 4.0)
+    assert(resultado == 41.92091902839603)
   }
+
   test("testEvaluar 4") {
-    val expr = Resta(Prod(Numero(7), Atomo('x')), Prod(Numero(2), Numero(5)))
-    assert(n.evaluar(expr, Atomo('x'), 2) == 4)
+    val expr = Resta(
+      Div(
+        Suma(
+          Prod(
+            Atomo('x'),
+            Atomo('x')
+          ),
+          Numero(2)
+        ),
+        Expo(
+          Atomo('x'),
+          Numero(2)
+        )
+      ),
+      Prod(
+        Numero(2),
+        Numero(2)
+      )
+    )
+    val resultado = n.evaluar(expr, Atomo('x'), 3.0)
+    assert(resultado == -2.7777777777777777)
   }
+
   test("testEvaluar 5") {
-    val expr = Suma(Prod(Numero(2), Atomo('x')), Expo(Numero(3), Numero(2)))
-    assert(n.evaluar(expr, Atomo('x'), 4) == 17)
+    val expr = Div(
+      Resta(
+        Prod(
+          Suma(
+            Expo(
+              Atomo('x'),
+              Numero(2)
+            ),
+            Numero(2)
+          ),
+          Resta(
+            Logaritmo(
+              Atomo('x')
+            ),
+            Numero(3)
+          )
+        ),
+        Atomo('x')
+      ),
+      Logaritmo(
+        Div(
+          Expo(
+            Atomo('x'),
+            Numero(2)
+          ),
+          Numero(2)
+        )
+      )
+    )
+    val resultado = n.evaluar(expr, Atomo('x'), 2.0)
+    assert(resultado == -22.85390081777927)
   }
 
 }

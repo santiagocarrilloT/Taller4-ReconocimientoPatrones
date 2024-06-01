@@ -14,6 +14,8 @@ object Taller4{
   def saludo() = "Taller 4"
 
   def main(args: Array[String]): Unit = {
+    val newtonSec = new Newton
+    val newtonPar = new NewtonParalela
     println(saludo())
     println(
       withWarmer(new Warmer.Default) measure {
