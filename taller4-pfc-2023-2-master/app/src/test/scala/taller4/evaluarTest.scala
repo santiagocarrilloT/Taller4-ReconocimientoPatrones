@@ -9,17 +9,9 @@ class evaluarTest extends AnyFunSuiteLike {
   val n = new Newton()
   test("testEvaluar 1") {
     val expr1 = Suma(
-      Prod(
-        Suma(Atomo('x'), Numero(1)),
-        Div(
-          Resta(Expo(Atomo('x'), Numero(2)), Numero(4)),
-          Numero(2)
-        )
-      ),
-      Div(Numero(5), Suma(Atomo('x'), Numero(2)))
-    )
-    val resultado = n.evaluar(expr1, Atomo('x'), 2.0)
-    assert(resultado == 1.25)
+      Expo(
+        Atomo('x'),Numero(3)), Suma(Prod(Numero(6), Expo( Atomo('x'), Numero(2))),Resta(Prod(Numero(11), Atomo('x')), Numero(6))) )
+    assert(n.evaluar(expr1, Atomo('x'), 3.0) == 108.0)
   }
 
   test("testEvaluar 2") {
@@ -52,8 +44,7 @@ class evaluarTest extends AnyFunSuiteLike {
         )
       )
     )
-    val resultado = n.evaluar(expr, Atomo('x'), 2.0)
-    assert(resultado == -7.613705638880109)
+    assert(n.evaluar(expr, Atomo('x'), 2.0) == -7.613705638880109)
   }
 
   test("testEvaluar 3") {
@@ -86,8 +77,7 @@ class evaluarTest extends AnyFunSuiteLike {
         Numero(2)
       )
     )
-    val resultado = n.evaluar(expr, Atomo('x'), 4.0)
-    assert(resultado == 41.92091902839603)
+    assert(n.evaluar(expr, Atomo('x'), 4.0) == 41.92091902839603)
   }
 
   test("testEvaluar 4") {
@@ -110,8 +100,7 @@ class evaluarTest extends AnyFunSuiteLike {
         Numero(2)
       )
     )
-    val resultado = n.evaluar(expr, Atomo('x'), 3.0)
-    assert(resultado == -2.7777777777777777)
+    assert(n.evaluar(expr, Atomo('x'), 3.0) == -2.7777777777777777)
   }
 
   test("testEvaluar 5") {
@@ -144,8 +133,7 @@ class evaluarTest extends AnyFunSuiteLike {
         )
       )
     )
-    val resultado = n.evaluar(expr, Atomo('x'), 2.0)
-    assert(resultado == -22.85390081777927)
+    assert(n.evaluar(expr, Atomo('x'), 2.0) == -22.85390081777927)
   }
 
 }

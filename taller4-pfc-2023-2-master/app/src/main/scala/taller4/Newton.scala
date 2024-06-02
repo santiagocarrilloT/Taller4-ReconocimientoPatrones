@@ -34,8 +34,6 @@ class Newton {
     case Expo(e1, Numero(n)) => Prod(Numero(n), Prod(Expo(e1, Numero(n - 1)), derivar(e1, a)))
     case Logaritmo(e1) => Div(derivar(e1, a), e1)
     case Expo(e1, e2) => Prod(Expo(e1, Resta(e2, Numero(1))), Suma(Prod(derivar(e1, a), e2), Prod(e1, Prod(derivar(e2, a), Logaritmo(e1)))))
-
-
   }
 
   def evaluar(f: Expr, a: Atomo, v: Double): Double = f match {
@@ -128,36 +126,27 @@ class Newton {
 object Newton {
   def main(args: Array[String]): Unit = {
     val n = new Newton()
-    val expr1 = Suma(
+    val expr = Resta(
       Prod(
+        Suma(
+          Prod(Expo(Atomo('x'), Numero(0)), Numero(2)),
+          Resta(Expo(Atomo('x'), Numero(0)), Resta(Prod(Atomo('x'), Numero(3)), Numero(6)))
+        ),
         Resta(
-          Expo(
+          Expo(Atomo('x'), Numero(5)),
+          Suma(
             Suma(
-              Logaritmo(
-                Atomo('x')
-              ),
-              Atomo('x')
+              Suma(Prod(Numero(5), Expo(Atomo('x'), Numero(4))), Prod(Numero(10), Expo(Atomo('x'), Numero(3)))),
+              Prod(Numero(1), Expo(Atomo('x'), Numero(2)))
             ),
-            Numero(2)
-          ),
-          Div(
-            Atomo('x'),
-            Numero(3)
+            Resta(Prod(Numero(1), Atomo('x')), Numero(1))
           )
-        ),
-        Atomo('x')
+        )
       ),
-      Div(
-        Logaritmo(
-          Expo(
-            Atomo('x'),
-            Atomo('x')
-          )
-        ),
-        Atomo('x')
-      )
+      Numero(0)
     )
-    println(n.buenaAprox(expr1, Atomo('x'), 1.5))
+
+    println(n.limpiar(expr))
   }
 }
 

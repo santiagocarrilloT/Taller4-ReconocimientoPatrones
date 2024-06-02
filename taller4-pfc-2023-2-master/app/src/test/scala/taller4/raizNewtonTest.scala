@@ -9,36 +9,171 @@ class raizNewtonTest extends AnyFunSuiteLike {
   val n = new Newton()
 
   test("testRaizNewton 1") {
-    val expr1 = Prod(
-      Numero(2),
-      Suma(
-        Resta(
-          Expo(Atomo('x'), Numero(5)),
-          Prod(Numero(4), Expo(Atomo('x'), Numero(4)))
-        ),
+    val expr1 = Resta(
+      Prod(
         Suma(
-          Prod(Numero(3), Expo(Atomo('x'), Numero(3))),
+          Suma(
+            Suma(
+              Suma(
+                Suma(
+                  Suma(
+                    Suma(
+                      Expo(Atomo('x'), Numero(8)),
+                      Prod(Numero(3), Expo(Atomo('x'), Numero(7)))
+                    ),
+                    Prod(Numero(-5), Expo(Atomo('x'), Numero(6)))
+                  ),
+                  Prod(Numero(8), Expo(Atomo('x'), Numero(5)))
+                ),
+                Prod(Numero(-10), Expo(Atomo('x'), Numero(4)))
+              ),
+              Prod(Numero(12), Expo(Atomo('x'), Numero(3)))
+            ),
+            Prod(Numero(-15), Expo(Atomo('x'), Numero(2)))
+          ),
+          Prod(Numero(17), Atomo('x'))
+        ),
+        Numero(-20)
+      ),
+      Prod(
+        Suma(
+          Suma(
+            Suma(
+              Suma(
+                Suma(
+                  Suma(
+                    Suma(
+                      Expo(Atomo('x'), Numero(7)),
+                      Prod(Numero(-4), Expo(Atomo('x'), Numero(6)))
+                    ),
+                    Prod(Numero(6), Expo(Atomo('x'), Numero(5)))
+                  ),
+                  Prod(Numero(-4), Expo(Atomo('x'), Numero(4)))
+                ),
+                Prod(Numero(7), Expo(Atomo('x'), Numero(3)))
+              ),
+              Prod(Numero(-8), Expo(Atomo('x'), Numero(2)))
+            ),
+            Prod(Numero(9), Atomo('x'))
+          ),
+          Numero(-10)
+        ),
+        Prod(
           Resta(
-            Prod(Numero(2), Expo(Atomo('x'), Numero(2))),
-            Numero(5)
+            Prod(
+              Suma(
+                Suma(
+                  Suma(
+                    Suma(
+                      Suma(
+                        Suma(
+                          Suma(
+                            Suma(
+                              Expo(Atomo('x'), Numero(9)),
+                              Prod(Numero(-9), Expo(Atomo('x'), Numero(8)))
+                            ),
+                            Prod(Numero(36), Expo(Atomo('x'), Numero(7)))
+                          ),
+                          Prod(Numero(-84), Expo(Atomo('x'), Numero(6)))
+                        ),
+                        Prod(Numero(126), Expo(Atomo('x'), Numero(5)))
+                      ),
+                      Prod(Numero(-126), Expo(Atomo('x'), Numero(4)))
+                    ),
+                    Prod(Numero(84), Expo(Atomo('x'), Numero(3)))
+                  ),
+                  Prod(Numero(-36), Expo(Atomo('x'), Numero(2)))
+                ),
+                Prod(Numero(9), Atomo('x'))
+              ),
+              Numero(-1)
+            ),
+            Prod(
+              Suma(
+                Suma(
+                  Suma(
+                    Suma(
+                      Suma(
+                        Prod(Expo(Atomo('x'), Numero(6)), Numero(-6)),
+                        Prod(Numero(15), Expo(Atomo('x'), Numero(4)))
+                      ),
+                      Resta(
+                        Suma(
+                          Prod(Numero(20), Expo(Atomo('x'), Numero(3))),
+                          Prod(Numero(15), Expo(Atomo('x'), Numero(2)))
+                        ),
+                        Prod(Numero(6), Atomo('x'))
+                      )
+                    ),
+                    Prod(Numero(-6), Atomo('x'))
+                  ),
+                  Prod(Numero(1), Atomo('x'))
+                ),
+                Numero(-10)
+              ),
+              Suma(
+                Suma(
+                  Suma(
+                    Suma(
+                      Suma(
+                        Suma(
+                          Suma(
+                            Prod(Numero(-9), Expo(Atomo('x'), Numero(8))),
+                            Prod(Numero(36), Expo(Atomo('x'), Numero(7)))
+                          ),
+                          Prod(Numero(-84), Expo(Atomo('x'), Numero(6)))
+                        ),
+                        Prod(Numero(126), Expo(Atomo('x'), Numero(5)))
+                      ),
+                      Prod(Numero(-126), Expo(Atomo('x'), Numero(4)))
+                    ),
+                    Prod(Numero(84), Expo(Atomo('x'), Numero(3)))
+                  ),
+                  Prod(Numero(-36), Expo(Atomo('x'), Numero(2)))
+                ),
+                Prod(Numero(9), Atomo('x'))
+              )
+            )
+          ),
+          Numero(-10)
+        )
+      )
+    )
+    assert(n.raizNewton(expr1, Atomo('x'), 3.0, n.buenaAprox) == 2.092094746707931 )
+  }
+  test("testRaizNewton 2") {
+    val expr1 = Prod(
+      Suma(
+        Prod(Expo(Atomo('x'), Numero(6)), Numero(-6)),
+        Suma(
+          Prod(Numero(15), Expo(Atomo('x'), Numero(4))),
+          Resta(
+            Suma(
+              Prod(Numero(20), Expo(Atomo('x'), Numero(3))),
+              Prod(Numero(15), Expo(Atomo('x'), Numero(2)))
+            ),
+            Prod(Numero(6), Atomo('x'))
+          )
+        )
+      ),
+      Suma(
+        Prod(Expo(Atomo('x'), Numero(5)), Numero(1)),
+        Resta(
+          Suma(
+            Prod(Numero(-5), Expo(Atomo('x'), Numero(4))),
+            Prod(Numero(10), Expo(Atomo('x'), Numero(3)))
+          ),
+          Resta(
+            Suma(
+              Prod(Numero(10), Expo(Atomo('x'), Numero(2))),
+              Prod(Numero(5), Atomo('x'))
+            ),
+            Numero(1)
           )
         )
       )
     )
-    assert(n.raizNewton(expr1, Atomo('x'), 1.5, n.buenaAprox) == 2.716369089563468)
-  }
-  test("testRaizNewton 2") {
-    val expr1 = Div(
-      Suma(
-        Prod(Numero(2), Expo(Atomo('x'), Numero(3))),
-        Prod(Numero(3), Expo(Atomo('x'), Numero(2)))
-      ),
-      Suma(
-        Prod(Numero(4), Atomo('x')),
-        Numero(5)
-      )
-    )
-    assert(n.raizNewton(expr1, Atomo('x'), -2.0, n.buenaAprox) == -1.4999674349757834)
+    assert(n.raizNewton(expr1, Atomo('x'), 2.0, n.buenaAprox) == 2.125451742563444)
   }
   test("testRaizNewton 3") {
     val expr1 = Div(
@@ -137,7 +272,7 @@ class raizNewtonTest extends AnyFunSuiteLike {
         )
       )
     )
-    assert(n.raizNewton(s,Atomo('x'),2.0,n.buenaAprox) == -0.9637458601898243)// -0.9637458601898243
+    assert(n.raizNewton(s,Atomo('x'),2.0,n.buenaAprox) == -0.9637458601898243)
 
   }
 
