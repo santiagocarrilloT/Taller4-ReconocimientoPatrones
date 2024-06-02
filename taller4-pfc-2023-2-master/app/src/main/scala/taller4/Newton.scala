@@ -1,3 +1,8 @@
+/**
+ * Taller 3 - Programación Funcional
+ * Autores: Edwar Forero, Santiago Carrillo, Alexis Solis
+ * Profesor: Carlos A Delgado
+ */
 package taller4
 
 import scala.annotation.tailrec
@@ -126,27 +131,138 @@ class Newton {
 object Newton {
   def main(args: Array[String]): Unit = {
     val n = new Newton()
-    val expr = Resta(
+    val expr1 = Resta(
       Prod(
         Suma(
-          Prod(Expo(Atomo('x'), Numero(0)), Numero(2)),
-          Resta(Expo(Atomo('x'), Numero(0)), Resta(Prod(Atomo('x'), Numero(3)), Numero(6)))
-        ),
-        Resta(
-          Expo(Atomo('x'), Numero(5)),
           Suma(
             Suma(
-              Suma(Prod(Numero(5), Expo(Atomo('x'), Numero(4))), Prod(Numero(10), Expo(Atomo('x'), Numero(3)))),
-              Prod(Numero(1), Expo(Atomo('x'), Numero(2)))
+              Suma(
+                Suma(
+                  Suma(
+                    Suma(
+                      Expo(Atomo('x'), Numero(8)),
+                      Prod(Numero(3), Expo(Atomo('x'), Numero(7)))
+                    ),
+                    Prod(Numero(-5), Expo(Atomo('x'), Numero(6)))
+                  ),
+                  Prod(Numero(8), Expo(Atomo('x'), Numero(5)))
+                ),
+                Prod(Numero(-10), Expo(Atomo('x'), Numero(4)))
+              ),
+              Prod(Numero(12), Expo(Atomo('x'), Numero(3)))
             ),
-            Resta(Prod(Numero(1), Atomo('x')), Numero(1))
-          )
-        )
+            Prod(Numero(-15), Expo(Atomo('x'), Numero(2)))
+          ),
+          Prod(Numero(17), Atomo('x'))
+        ),
+        Numero(-20)
       ),
-      Numero(0)
+      Prod(
+        Suma(
+          Suma(
+            Suma(
+              Suma(
+                Suma(
+                  Suma(
+                    Suma(
+                      Expo(Atomo('x'), Numero(7)),
+                      Prod(Numero(-4), Expo(Atomo('x'), Numero(6)))
+                    ),
+                    Prod(Numero(6), Expo(Atomo('x'), Numero(5)))
+                  ),
+                  Prod(Numero(-4), Expo(Atomo('x'), Numero(4)))
+                ),
+                Prod(Numero(7), Expo(Atomo('x'), Numero(3)))
+              ),
+              Prod(Numero(-8), Expo(Atomo('x'), Numero(2)))
+            ),
+            Prod(Numero(9), Atomo('x'))
+          ),
+          Numero(-10)
+        ),
+        Prod(
+          Resta(
+            Prod(
+              Suma(
+                Suma(
+                  Suma(
+                    Suma(
+                      Suma(
+                        Suma(
+                          Suma(
+                            Suma(
+                              Expo(Atomo('x'), Numero(9)),
+                              Prod(Numero(-9), Expo(Atomo('x'), Numero(8)))
+                            ),
+                            Prod(Numero(36), Expo(Atomo('x'), Numero(7)))
+                          ),
+                          Prod(Numero(-84), Expo(Atomo('x'), Numero(6)))
+                        ),
+                        Prod(Numero(126), Expo(Atomo('x'), Numero(5)))
+                      ),
+                      Prod(Numero(-126), Expo(Atomo('x'), Numero(4)))
+                    ),
+                    Prod(Numero(84), Expo(Atomo('x'), Numero(3)))
+                  ),
+                  Prod(Numero(-36), Expo(Atomo('x'), Numero(2)))
+                ),
+                Prod(Numero(9), Atomo('x'))
+              ),
+              Numero(-1)
+            ),
+            Prod(
+              Suma(
+                Suma(
+                  Suma(
+                    Suma(
+                      Suma(
+                        Prod(Expo(Atomo('x'), Numero(6)), Numero(-6)),
+                        Prod(Numero(15), Expo(Atomo('x'), Numero(4)))
+                      ),
+                      Resta(
+                        Suma(
+                          Prod(Numero(20), Expo(Atomo('x'), Numero(3))),
+                          Prod(Numero(15), Expo(Atomo('x'), Numero(2)))
+                        ),
+                        Prod(Numero(6), Atomo('x'))
+                      )
+                    ),
+                    Prod(Numero(-6), Atomo('x'))
+                  ),
+                  Prod(Numero(1), Atomo('x'))
+                ),
+                Numero(-10)
+              ),
+              Suma(
+                Suma(
+                  Suma(
+                    Suma(
+                      Suma(
+                        Suma(
+                          Suma(
+                            Prod(Numero(-9), Expo(Atomo('x'), Numero(8))),
+                            Prod(Numero(36), Expo(Atomo('x'), Numero(7)))
+                          ),
+                          Prod(Numero(-84), Expo(Atomo('x'), Numero(6)))
+                        ),
+                        Prod(Numero(126), Expo(Atomo('x'), Numero(5)))
+                      ),
+                      Prod(Numero(-126), Expo(Atomo('x'), Numero(4)))
+                    ),
+                    Prod(Numero(84), Expo(Atomo('x'), Numero(3)))
+                  ),
+                  Prod(Numero(-36), Expo(Atomo('x'), Numero(2)))
+                ),
+                Prod(Numero(9), Atomo('x'))
+              )
+            )
+          ),
+          Numero(-10)
+        )
+      )
     )
 
-    println(n.limpiar(expr))
+    println(n.raizNewton(expr1, Atomo('x'), 3.0, n.buenaAprox))
   }
 }
 
